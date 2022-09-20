@@ -1,5 +1,7 @@
 import { initializeApp } from "firebase/app";
 import {getFirestore} from "firebase/firestore"
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -10,7 +12,6 @@ const firebaseConfig = {
   messagingSenderId: "665392554907",
   appId: "1:665392554907:web:6e6eb419782e54b936b73e"
 };
-
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

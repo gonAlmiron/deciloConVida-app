@@ -18,9 +18,14 @@ const ItemListContainer = () => {
         setLoading(true)
         // 1- armar la referencia (sync) aca decimos a firebase q coleccion queremos consumir, de que base de datos, de que proyecto
             const productosRef = collection(db, 'Productos') 
-            const q = query(productosRef, where('category', '==', categoryId))
+            const q = categoryId 
+            ? query(productosRef, where('category', '==', categoryId))
+            : productosRef
+            // const q = query(productosRef, where('category', '==', categoryId))
         // 2- consumir esa referencia (async)
-            getDocs(q)
+
+
+            getDocs(productosRef)
                 .then((resp) => {
                     const productosDB = resp.docs.map( (doc) => ({id: doc.id, ...doc.data()}) )
                     console.log(productosDB)
