@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react"
 import { useParams, Navigate } from "react-router-dom"
-import { pedirDatos } from "../../helpers/pedirDatos"
 import ItemList from "../ItemList/ItemList"
 import Spinner from "../Spinner/Spinner"
 import { useLoginContext } from "../../Context/LoginContext"
-
-
+import { collection, getDocs } from "firebase/firestore"
+import { db } from "../../firebase/config"
 
 const ItemListContainer = () => {
 
@@ -17,23 +16,20 @@ const ItemListContainer = () => {
 
     useEffect(() => {
         setLoading(true)
-
-        pedirDatos()
-            .then( (res) => {
-            if(!categoryId) {
-
-                setProductos(res)
-            } else {
-                setProductos(res.filter((prod)=> prod.category === categoryId) )
-            }
-               
-            })
-            .catch( (error) => {
-                console.log(error)
-            })
-            .finally(() => {
-                setLoading(false)
-            })
+        // 1- armar la referencia (sync) aca decimos a firebase q coleccion queremos consumir, de que base de datos, de que proyecto
+            const productosRef = collection(db, 'Productos') 
+        
+        // 2- consumir esa referencia (async)
+            getDocs(productosRef)
+                .then((resp) => {
+                    const productosDB = resp.docs.map( (doc) => ({id: doc.id, ...doc.data()}) )
+                    console.log(productosDB)
+                    setProductos(productosDB)
+                }).finally(() => {
+                    setLoading(false)
+                })
+            
+      
     }, [categoryId])
 
     const {user} = useLoginContext()

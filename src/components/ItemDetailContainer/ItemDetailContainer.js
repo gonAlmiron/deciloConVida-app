@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react"
 import ItemDetail from "../ItemDetail/ItemDetail"
 import { useParams } from 'react-router-dom'
-import { pedirDatos } from "../../helpers/pedirDatos"
 import Spinner from "../Spinner/Spinner"
-
+import { doc, getDoc } from "firebase/firestore"
+import { db } from "../../firebase/config"
 
 
 const ItemDetailContainer = () => {
@@ -18,14 +18,18 @@ const ItemDetailContainer = () => {
     useEffect(() => {
 
         setLoading()
-        pedirDatos()
-        .then((res) => {
-            setItem( res.find((prod) => prod.id === Number(itemId)) )
-        })
-        .catch(err => console.log(err))
-        .finally(() => {
-            setLoading(false)
-        })
+        
+        // 1- armar la referencia ( sincornico)
+        const docRef = doc(db, 'Productos', itemId)
+        // 2- llamar a la base de datos (asincronica)
+        getDoc(docRef)
+            .then( (doc) => {
+                setItem({id: doc.id, ...doc.data()})
+           
+            })
+            .finally(() => {
+                setLoading(false)
+            })
     }, [])
 
     return (
