@@ -3,7 +3,7 @@ import { useParams, Navigate } from "react-router-dom"
 import ItemList from "../ItemList/ItemList"
 import Spinner from "../Spinner/Spinner"
 import { useLoginContext } from "../../Context/LoginContext"
-import { collection, getDocs } from "firebase/firestore"
+import { collection, getDocs, query, where } from "firebase/firestore"
 import { db } from "../../firebase/config"
 
 const ItemListContainer = () => {
@@ -18,9 +18,9 @@ const ItemListContainer = () => {
         setLoading(true)
         // 1- armar la referencia (sync) aca decimos a firebase q coleccion queremos consumir, de que base de datos, de que proyecto
             const productosRef = collection(db, 'Productos') 
-        
+            const q = query(productosRef, where('category', '==', categoryId))
         // 2- consumir esa referencia (async)
-            getDocs(productosRef)
+            getDocs(q)
                 .then((resp) => {
                     const productosDB = resp.docs.map( (doc) => ({id: doc.id, ...doc.data()}) )
                     console.log(productosDB)
