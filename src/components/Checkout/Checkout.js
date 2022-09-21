@@ -1,9 +1,14 @@
 import { useState } from "react"
-
+import {addDoc, collection} from 'firebase/firestore'
+import { useCartContext } from "../../Context/CartContext"
+import { db } from "../../firebase/config"
+import { CardText } from "reactstrap"
 
 
 
 const CheckOut = () => {
+
+    const {cart, cartTotal} = useCartContext()
 
     const [values, setValues] = useState({
         nombre: '',
@@ -24,17 +29,28 @@ const CheckOut = () => {
         e.preventDefault()
         
         const orden = {
-            comprador: {
-                nombre: values.nombre,
-                email: values.email,
-                direccion: values.direccion
-            }
-        }
+                nombre: values,
+                items: cart,
+                total: cartTotal()     
+                 }
 
             console.log("Submit realizado")
             console.log(orden)
 
+            const ordenesRef = collection(db, 'ordenes')
+
+            addDoc(ordenesRef, orden)
+                .then((doc) => {
+                    console.log(doc.id)
+                })
+
     }
+
+  
+
+
+
+
 
     return (
 <div className="container my-5">

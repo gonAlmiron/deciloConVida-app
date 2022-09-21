@@ -53,6 +53,19 @@ const emptyCart = () => {
   
 }
 
+const terminarCompra = () => {
+  Swal.fire({
+    title: 'Compra exitosa!',
+    text: `Tu numero de orden es ${id}`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, borrar carrito'
+  })
+      
+}
+
 
 useEffect(() => {
   localStorage.setItem('carrito', JSON.stringify(cart))
