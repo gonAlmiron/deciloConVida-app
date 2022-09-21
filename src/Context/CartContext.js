@@ -3,16 +3,14 @@ import Swal from "sweetalert2";
 
 export const CartContext = createContext()
 
-export const useCartContext = () => {
-    return useContext(CartContext)
-}
+
 
 const init = JSON.parse(localStorage.getItem('carrito')) || []
 
 
 export const CartProvider = ({children}) => {
 
-    const [cart, setCart] = useState([])
+    const [cart, setCart] = useState(init)
   
 const addToCart = (item) => {
   setCart([...cart, item])
@@ -30,6 +28,10 @@ const cartQuantity = () => {
 
 const cartTotal = () => {
     return cart.reduce((acc, item) => acc + item.cantidad * item.precio, 0 )
+}
+
+const removeItem = (id) => {
+  setCart (cart.filter((item) => item.id !== id) )
 }
 
 const emptyCart = () => {
@@ -51,9 +53,6 @@ const emptyCart = () => {
   
 }
 
-const removeItem = (id) => {
-    setCart (cart.filter((item) => item.id !== id) )
-}
 
 useEffect(() => {
   localStorage.setItem('carrito', JSON.stringify(cart))
@@ -75,4 +74,8 @@ useEffect(() => {
           
     
     )
+}
+
+export const useCartContext = () => {
+  return useContext(CartContext)
 }

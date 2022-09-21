@@ -2,8 +2,6 @@
 const ItemCount = ({max, counter, setCounter, handleAgregar}) => {
 
 
-
-
     const handleRestar = () => {
         if (counter > 1) {
             setCounter(counter - 1)

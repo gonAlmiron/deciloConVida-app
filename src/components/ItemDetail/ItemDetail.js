@@ -19,7 +19,8 @@ const ItemDetail = ({item}) => {
             id: item.id,
             precio: item.precio,
             nombre: item.nombre,
-            cantidad
+            cantidad,
+            descripcion: item.descripcion
       
         }
         addToCart(itemToCart)

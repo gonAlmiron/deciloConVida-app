@@ -5,6 +5,7 @@ import Contacto from '../components/Contacto/Contacto';
 import Nosotros from '../components/Nosotros/Nosotros';
 import Cart from '../components/Cart/Cart';
 import { NavBar } from "../components/Header/NavBar.js";
+import CheckOut from "../components/Checkout/Checkout.js";
 
 
 const PrivateRoutes = () => {
@@ -18,6 +19,7 @@ const PrivateRoutes = () => {
                 <Route path='/Productos' element={<ItemListContainer/>} />
                 <Route path='/item/:itemId' element={<ItemDetailContainer/>}/>
                 <Route path='/productos/:categoryId' element={<ItemListContainer/>} />
+                <Route path='/CheckOut' element={<CheckOut/>}/>
                 <Route path='/Contacto' element={<Contacto/>}/>
                 <Route path='/Nosotros' element={<Nosotros/>}/>
                 <Route path='/Cart' element= {<Cart/>} />

@@ -25,7 +25,7 @@ const ItemListContainer = () => {
         // 2- consumir esa referencia (async)
 
 
-            getDocs(productosRef)
+            getDocs(q)
                 .then((resp) => {
                     const productosDB = resp.docs.map( (doc) => ({id: doc.id, ...doc.data()}) )
                     console.log(productosDB)

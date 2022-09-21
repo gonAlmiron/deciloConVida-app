@@ -18,7 +18,7 @@ export const NavBar = () => {
         <Container>
           <Navbar.Brand href="/">Decilo con Vida</Navbar.Brand>
           <Nav className="me-auto">
-            <Link to="/productos/:categoryId" className="nav">Productos</Link>
+            <Link to="/" className="nav">Productos</Link>
             <Link to="/Nosotros" className="nav">Nosotros</Link>
             <Link to="/Contacto" className="nav">Contacto</Link>
             
