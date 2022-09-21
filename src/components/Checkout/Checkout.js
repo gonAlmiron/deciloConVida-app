@@ -2,13 +2,13 @@ import { useState } from "react"
 import {addDoc, collection} from 'firebase/firestore'
 import { useCartContext } from "../../Context/CartContext"
 import { db } from "../../firebase/config"
-import { CardText } from "reactstrap"
+
 
 
 
 const CheckOut = () => {
 
-    const {cart, cartTotal} = useCartContext()
+    const {cart, cartTotal, terminarCompra} = useCartContext()
 
     const [values, setValues] = useState({
         nombre: '',
@@ -42,6 +42,7 @@ const CheckOut = () => {
             addDoc(ordenesRef, orden)
                 .then((doc) => {
                     console.log(doc.id)
+                    terminarCompra(doc.id)
                 })
 
     }

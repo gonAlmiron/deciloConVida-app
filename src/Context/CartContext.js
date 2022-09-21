@@ -53,17 +53,17 @@ const emptyCart = () => {
   
 }
 
-const terminarCompra = () => {
+
+
+const terminarCompra = (id) => {
   Swal.fire({
     title: 'Compra exitosa!',
     text: `Tu numero de orden es ${id}`,
-    icon: 'warning',
-    showCancelButton: true,
+    icon: 'success',
     confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Si, borrar carrito'
+    confirmButtonText: 'Genial!'
   })
-      
+      setCart([])
 }
 
 
@@ -79,7 +79,8 @@ useEffect(() => {
             cartQuantity,
             cartTotal,
             emptyCart,
-            removeItem
+            removeItem,
+            terminarCompra
           } }>
             {children}
             </CartContext.Provider>
