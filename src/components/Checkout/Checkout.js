@@ -8,7 +8,9 @@ import { db } from "../../firebase/config"
 
 const CheckOut = () => {
 
-    const {cart, cartTotal, terminarCompra} = useCartContext()
+    const {cart, cartTotal, terminarCompra, terminarCompraconSwal} = useCartContext()
+
+    const [orderId, setOrderId] = useState(null)
 
     const [values, setValues] = useState({
         nombre: '',
@@ -42,13 +44,28 @@ const CheckOut = () => {
             addDoc(ordenesRef, orden)
                 .then((doc) => {
                     console.log(doc.id)
-                    terminarCompra(doc.id)
+                    // terminarCompraconSwal(doc.id)
+                    setOrderId(doc.id)
+                    terminarCompra()
                 })
 
     }
 
   
+    if (orderId) {
+        return (
+            <div className="container my-5">
 
+                <h2>
+                    <hr/>
+                    <p>
+                        Tu número de orden es: <strong>{orderId}</strong>
+                    </p>
+                </h2>
+
+            </div>
+        )
+    }
 
 
 

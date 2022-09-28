@@ -55,7 +55,11 @@ const emptyCart = () => {
 
 
 
-const terminarCompra = (id) => {
+const terminarCompra = () => {
+      setCart([])
+}
+
+const terminarCompraconSwal = (id) => {
   Swal.fire({
     title: 'Compra exitosa!',
     text: `Tu numero de orden es ${id}`,
@@ -80,7 +84,8 @@ useEffect(() => {
             cartTotal,
             emptyCart,
             removeItem,
-            terminarCompra
+            terminarCompra,
+            terminarCompraconSwal
           } }>
             {children}
             </CartContext.Provider>
