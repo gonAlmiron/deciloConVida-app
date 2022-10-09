@@ -35,7 +35,9 @@ export const NavBar = () => {
     {cart.length > 0 ? <button><CartWidget/></button> : ''}
         
       </Navbar>
-        
+    
+
+
     </>
   )
 }

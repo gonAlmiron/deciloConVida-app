@@ -13,15 +13,11 @@ const ItemDetailContainer = () => {
 
     const {itemId} = useParams()
 
-    // console.log(itemId)
 
     useEffect(() => {
-
         setLoading()
         
-        // 1- armar la referencia ( sincornico)
         const docRef = doc(db, 'Productos', itemId)
-        // 2- llamar a la base de datos (asincronica)
         getDoc(docRef)
             .then( (doc) => {
                 setItem({id: doc.id, ...doc.data()})
@@ -37,7 +33,7 @@ const ItemDetailContainer = () => {
         <div>
             {    loading 
                 ? <Spinner/> :
-            <ItemDetail item={item} key={itemId}/>
+                <ItemDetail item={item} key={itemId}/>
             
 }
         </div>

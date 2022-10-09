@@ -55,7 +55,7 @@ const emptyCart = () => {
 
 
 
-const terminarCompra = (id) => {
+const terminarCompraConSwal = (id) => {
   Swal.fire({
     title: 'Compra exitosa!',
     text: `Tu numero de orden es ${id}`,
@@ -66,6 +66,9 @@ const terminarCompra = (id) => {
       setCart([])
 }
 
+const terminarCompra = (id) => {
+      setCart([])
+}
 
 useEffect(() => {
   localStorage.setItem('carrito', JSON.stringify(cart))

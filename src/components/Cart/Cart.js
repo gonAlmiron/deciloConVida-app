@@ -1,14 +1,11 @@
 import { useCartContext } from "../../Context/CartContext"
 import {BsFillTrashFill} from "react-icons/bs"
-import { useDarkMode } from "../../Context/DarkModeContext"
 import { Link } from "react-router-dom"
 
 const Cart = () => {
 
 
     const {cart, cartTotal, emptyCart, removeItem} = useCartContext()
-    const {darkMode} = useDarkMode()
-    console.log(darkMode)
 
     if (cart.length === 0) {
         return (

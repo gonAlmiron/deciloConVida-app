@@ -5,6 +5,8 @@ import Spinner from "../Spinner/Spinner"
 import { useLoginContext } from "../../Context/LoginContext"
 import { collection, getDocs, query, where } from "firebase/firestore"
 import { db } from "../../firebase/config"
+import FooterUno from "../Footer/Footer"
+import CarouselUno from "../Carousel/Carousel"
 
 const ItemListContainer = () => {
 
@@ -12,7 +14,7 @@ const ItemListContainer = () => {
     const [loading, setLoading] = useState(true)
 
     const { categoryId } = useParams()
-    // console.log(categoryId)
+
 
     useEffect(() => {
         setLoading(true)
@@ -21,14 +23,12 @@ const ItemListContainer = () => {
             const q = categoryId 
             ? query(productosRef, where('category', '==', categoryId))
             : productosRef
-            // const q = query(productosRef, where('category', '==', categoryId))
         // 2- consumir esa referencia (async)
-
 
             getDocs(q)
                 .then((resp) => {
                     const productosDB = resp.docs.map( (doc) => ({id: doc.id, ...doc.data()}) )
-                    console.log(productosDB)
+        
                     setProductos(productosDB)
                 }).finally(() => {
                     setLoading(false)
@@ -49,7 +49,11 @@ const ItemListContainer = () => {
                 {
                        loading 
                        ? <Spinner/>
-                       : <ItemList productos={productos}/>
+                       : <>
+                       <CarouselUno/>
+                       <ItemList productos={productos}/>
+                        <FooterUno/>
+                        </>
                    }
                </div>
                : <Navigate to="/login" />

@@ -2,13 +2,16 @@ import { useState } from "react"
 import {addDoc, collection} from 'firebase/firestore'
 import { useCartContext } from "../../Context/CartContext"
 import { db } from "../../firebase/config"
+import { Navigate } from "react-router-dom"
 
 
 
 
 const CheckOut = () => {
 
-    const {cart, cartTotal, terminarCompra} = useCartContext()
+    const {cart, cartTotal, terminarCompra, terminarCompraConSwal} = useCartContext()
+
+    const [orderId, setOrderId] = useState(null)
 
     const [values, setValues] = useState({
         nombre: '',
@@ -34,22 +37,33 @@ const CheckOut = () => {
                 total: cartTotal()     
                  }
 
-            console.log("Submit realizado")
-            console.log(orden)
+        const ordenesRef = collection(db, 'ordenes')
 
-            const ordenesRef = collection(db, 'ordenes')
-
-            addDoc(ordenesRef, orden)
+         addDoc(ordenesRef, orden)
                 .then((doc) => {
                     console.log(doc.id)
-                    terminarCompra(doc.id)
+                
+                    setOrderId(doc.id)
+                    terminarCompra()
+                    //terminarCompraConSwal(doc.id)
                 })
 
     }
 
   
+if (orderId) {
+    return (
+        <div className="container my-5">
+            <h2>Compra exitosa!</h2>
+            <hr/>
+            <p>Tu número de orden es: <strong>{orderId}</strong> </p>
+        </div>
+    )
+}
 
-
+if (cart.length === 0) {
+    return <Navigate to="/"/>
+}
 
 
 

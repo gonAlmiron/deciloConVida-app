@@ -5,7 +5,6 @@ import { LoginContext } from "../../Context/LoginContext"
 const LoginScreen = () => {
 
     const {login, user} = useContext(LoginContext)
-    console.log(user)
 
     const [email, setEmail] = useState('')
     const [pass, setPass] = useState('')
