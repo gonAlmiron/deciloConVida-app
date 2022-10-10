@@ -4,9 +4,7 @@ import Swal from "sweetalert2";
 export const CartContext = createContext()
 
 
-
 const init = JSON.parse(localStorage.getItem('carrito')) || []
-
 
 export const CartProvider = ({children}) => {
 
@@ -54,8 +52,11 @@ const emptyCart = () => {
 }
 
 
+const terminarCompra = () => {
+      setCart([])
+}
 
-const terminarCompraConSwal = (id) => {
+const terminarCompraconSwal = (id) => {
   Swal.fire({
     title: 'Compra exitosa!',
     text: `Tu numero de orden es ${id}`,
@@ -66,9 +67,6 @@ const terminarCompraConSwal = (id) => {
       setCart([])
 }
 
-const terminarCompra = (id) => {
-      setCart([])
-}
 
 useEffect(() => {
   localStorage.setItem('carrito', JSON.stringify(cart))
@@ -83,7 +81,8 @@ useEffect(() => {
             cartTotal,
             emptyCart,
             removeItem,
-            terminarCompra
+            terminarCompra,
+            terminarCompraconSwal
           } }>
             {children}
             </CartContext.Provider>

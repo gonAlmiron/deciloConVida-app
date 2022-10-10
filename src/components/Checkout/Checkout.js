@@ -1,5 +1,5 @@
 import { useState } from "react"
-import {addDoc, collection} from 'firebase/firestore'
+import {addDoc, collection, doc, getDoc, updateDoc} from 'firebase/firestore'
 import { useCartContext } from "../../Context/CartContext"
 import { db } from "../../firebase/config"
 import { Navigate } from "react-router-dom"
@@ -9,7 +9,7 @@ import { Navigate } from "react-router-dom"
 
 const CheckOut = () => {
 
-    const {cart, cartTotal, terminarCompra, terminarCompraConSwal} = useCartContext()
+    const {cart, cartTotal, terminarCompra} = useCartContext();
 
     const [orderId, setOrderId] = useState(null)
 
@@ -39,13 +39,32 @@ const CheckOut = () => {
 
         const ordenesRef = collection(db, 'ordenes')
 
+        cart.forEach((item) => {
+            const docRef = doc(db, 'Productos', item.id)
+
+            getDoc(docRef)
+                .then((doc) => {
+
+                    if (doc.data().stock >= item.cantidad) {
+
+                        updateDoc(docRef, {
+                            stock: doc.data().stock - item.cantidad
+                        })
+                    } else {
+                        console.log("no hay stock suficiente")
+                    }
+
+                })
+
+            })
+
+
          addDoc(ordenesRef, orden)
                 .then((doc) => {
                     console.log(doc.id)
                 
                     setOrderId(doc.id)
                     terminarCompra()
-                    //terminarCompraConSwal(doc.id)
                 })
 
     }
@@ -64,6 +83,21 @@ if (orderId) {
 if (cart.length === 0) {
     return <Navigate to="/"/>
 }
+    if (orderId) {
+        return (
+            <div className="container my-5">
+
+                <h2>
+                    <hr/>
+                    <p>
+                        Tu número de orden es: <strong>{orderId}</strong>
+                    </p>
+                </h2>
+
+            </div>
+        )
+    }
+
 
 
 
