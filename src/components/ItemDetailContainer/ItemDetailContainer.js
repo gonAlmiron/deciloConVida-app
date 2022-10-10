@@ -12,21 +12,23 @@ const ItemDetailContainer = () => {
     const [loading, setLoading] = useState(true)
 
     const {itemId} = useParams()
+   
 
 
     useEffect(() => {
         setLoading()
         
         const docRef = doc(db, 'Productos', itemId)
+        
         getDoc(docRef)
             .then( (doc) => {
                 setItem({id: doc.id, ...doc.data()})
-           
             })
             .finally(() => {
                 setLoading(false)
             })
-    }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps       
+    },  [])
 
     return (
 
