@@ -28,6 +28,8 @@ const LoginScreen = () => {
     return (
         <div>
             <form onSubmit={handleSubmit} className="container py-5">
+                <h4>Ingrese su nombre de usuario y contraseña</h4>
+                <hr/>
                 <input
                 type={'text'} 
                 className='form-control my-2' 
